@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="mb-3">
       
-      <v-col cols="12">
+      <v-col cols="6">
         <h1>What do you want to do?</h1>
         <v-form ref="form" lazy-validation class="text-center">
           <v-text-field
@@ -12,6 +12,16 @@
             label="Text"
             required
           ></v-text-field>
+
+          
+            <v-col cols="6">
+              <v-date-picker 
+              v-model="newTodo.deadline"
+              :value="new Date()"
+              :allowed-dates="allowedDates"
+              ></v-date-picker>
+            </v-col>
+          
 
           
           <v-btn
@@ -25,10 +35,10 @@
           <v-btn color="warning" class="mr-4" @click="reset">Clear</v-btn>
         </v-form>
       </v-col>
-    </v-row>
-    <v-divider></v-divider>
-    <v-row>
-      <v-col cols="12" v-if="todoList.length">
+    
+  
+   
+      <v-col cols="6" v-if="todoList.length">
     
         <v-list>
           <v-list-item-group
@@ -59,6 +69,13 @@
             </v-list-item-title>
           </v-list-item-content>
 
+
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ item.deadline | formatDate }}
+            </v-list-item-title>
+          </v-list-item-content>
+
               
                 <v-btn
                   color="error"
@@ -78,18 +95,18 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data: () => ({
     selected: [],
     newTodo: {
       title: "",
-      description: "",
+      deadline: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       titleRules: [
         (v) => !!v || "Text is required",
         (v) => (v && v.length <= 40) || "ToDo must be less than 40 characters",
       ],
       complete: false,
-      user: 1,
     },
     todoList: [],
     url: "http://localhost:8000/",
@@ -103,6 +120,9 @@ export default {
       axios.get(`${this.url}?ordering=complete`).then((response) => {
         this.todoList = response.data;
       });
+    },
+    allowedDates(val) {
+      return val >= new Date().toISOString().substr(0, 10)
     },
     reset() {
       this.$refs.form.reset();
