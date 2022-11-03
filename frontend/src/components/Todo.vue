@@ -19,6 +19,7 @@
               v-model="newTodo.deadline"
               :value="new Date()"
               :allowed-dates="allowedDates"
+              color="deep-purple"
               ></v-date-picker>
             </v-col>
           
@@ -52,7 +53,7 @@
           >
           
           <v-list-item-icon>
-            <strong>{{ item.deadline | formatDate }}</strong>
+            <strong>{{ item.deadline | formatDate }}</strong> 
           </v-list-item-icon>
 
           <v-list-item-action>
@@ -75,7 +76,7 @@
                   class="mr-4"
                   @click="deleteItem(item);"
                 >
-                  Delete task
+                  Delete
                 </v-btn>
 
             </v-list-item>
