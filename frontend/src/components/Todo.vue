@@ -52,7 +52,7 @@
           >
           
           <v-list-item-icon>
-            {{ item.id }}
+            <strong>{{ item.deadline | formatDate }}</strong>
           </v-list-item-icon>
 
           <v-list-item-action>
@@ -66,13 +66,6 @@
           <v-list-item-content>
             <v-list-item-title>
                 <strong>&nbsp; &nbsp;{{ item.text }}</strong>
-            </v-list-item-title>
-          </v-list-item-content>
-
-
-          <v-list-item-content>
-            <v-list-item-title>
-              {{ item.deadline | formatDate }}
             </v-list-item-title>
           </v-list-item-content>
 
